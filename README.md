@@ -1,0 +1,2 @@
+# mgmbeamer
+beamer template
