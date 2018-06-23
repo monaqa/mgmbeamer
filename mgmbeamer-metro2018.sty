@@ -1,4 +1,4 @@
-\NeedsTeXFormat{pLaTeX2e}
+\NeedsTeXFormat{LaTeX2e}
 
 \ProvidesPackage{mgmbeamer-metro2018}
 
@@ -21,6 +21,7 @@
 \usetikzlibrary{calc}
 \tcbuselibrary{xparse,skins}
 \RequirePackage{environ}
+\RequirePackage{wasysym}
 
 \RequirePackage{etoolbox}
 
@@ -42,6 +43,16 @@
 %%%%%%%%%%%%%%%%%%%
 %%% color theme %%%
 %%%%%%%%%%%%%%%%%%%
+% #604c38
+% #113b44
+% #EB811B
+% #14B03D
+% #e01e1a
+% #1d4a55
+% #e01e1a
+% #11449a
+% #95ecd6
+
 \definecolor{mDarkBrown}{HTML}{604c38}
 \definecolor{mDarkTeal}{HTML}{113b44}
 \definecolor{mLightBrown}{HTML}{EB811B}
@@ -269,14 +280,15 @@ fontlower=\small
 }{}{}
 
 \NewEnviron{alignc}[1][1]{
+{\footnotesize
 \begin{align}
-  \footnotesize
   \scalebox{#1}{$
   \begin{aligned}
     \BODY
   \end{aligned}
   $}
 \end{align}
+}
 }
 \NewEnviron{alignl}[1][1]{
 \par
@@ -290,6 +302,14 @@ $}
 \smallskip
 \par
 }
+
+\newcommand{\eqcbox}[3][]{\tcboxmath[
+enhanced,
+colframe=white,colback=white,
+boxsep=3pt,left=0pt,right=0pt,top=0pt,bottom=0pt,
+borderline={1pt}{1pt}{#2,dashed},
+arc=2pt,
+#1]{#3}}
 
 
 %%%%%%%%%%%%%%
@@ -312,5 +332,8 @@ colback=white, colframe=white, opacityback=0,
 borderline=#1,height={#2},width={#3},
 #4
 }
+
+\newcommand{\proslabel}{{\color{blue}\smiley}}
+\newcommand{\conslabel}{{\color{red}\frownie}}
 
 \endinput
