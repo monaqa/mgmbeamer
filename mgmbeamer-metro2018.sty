@@ -19,7 +19,7 @@
 \usetikzlibrary{arrows}
 \usetikzlibrary{arrows.meta}
 \usetikzlibrary{calc}
-\tcbuselibrary{xparse,skins}
+\tcbuselibrary{xparse,skins,theorems}
 \RequirePackage{environ}
 \RequirePackage{wasysym}
 
@@ -82,6 +82,11 @@
 \setbeamercolor{frametitle}{%
   use=palette primary,
   parent=palette primary
+}
+\setbeamercolor{palette appendix}{%
+  use=normal text,
+  fg=normal text.bg,
+  bg=mDarkTeal!70!black
 }
 
 %%%%%%%%%%%%%%%
@@ -149,6 +154,22 @@
 }
 \setbeamertemplate{frametitle}[mgmframetitle]
 
+\defbeamertemplate{frametitle}{mgmappendixframetitle}{%
+  \nointerlineskip%
+  % \vspace{.5ex}
+  \begin{beamercolorbox}[%
+      wd=\paperwidth,%
+      sep=0pt,%
+      leftskip=\metropolis@frametitle@padding,%
+      rightskip=\metropolis@frametitle@padding,%
+    ]{appendixframetitle}%
+  \metropolis@frametitlestrut@start%
+  \insertframetitle%
+  \nolinebreak%
+  \metropolis@frametitlestrut@end%
+  \end{beamercolorbox}%
+  \vspace{-1.0ex}
+}
 
 %%%%%%%%%%%%%%%
 %%% itemize %%%
@@ -171,7 +192,7 @@
 \textcolor{mDarkTeal}{\scriptsize$\bullet$}%
 }}
 \setbeamertemplate{itemize/enumerate body begin}{\gtfamily}
-\setbeamertemplate{itemize/enumerate subbody begin}{\gtfamily\small\mdseries}
+\setbeamertemplate{itemize/enumerate subbody begin}{\gtfamily\small}
 
 \setlength\leftmargini{1em}
 \setlength\leftmarginii{1em}
@@ -188,6 +209,15 @@
 
 \setbeamertemplate{footline}[frame number]
 
+% Appendix を番号に含めない
+\newcommand{\backupbegin}{
+\newcounter{framenumberappendix}
+\setcounter{framenumberappendix}{\value{framenumber}}
+}
+\newcommand{\backupend}{
+\addtocounter{framenumberappendix}{-\value{framenumber}}
+\addtocounter{framenumber}{\value{framenumberappendix}}
+}
 
 %%%%%%%%%%%%%
 %%% boxes %%%
@@ -250,6 +280,12 @@ fontlower=\small
 \newcommand{\bubble}[3][fill=mDarkTeal!5,line width=0.8pt,draw=mDarkTeal]{%
 \begin{tikzpicture}[remember picture, overlay]%
 \node[rectangle callout, callout absolute pointer={#2}, #1]{#3};%
+\end{tikzpicture}%
+}
+
+\newcommand{\bubbleat}[4][fill=mDarkTeal!5,line width=0.8pt,draw=mDarkTeal]{%
+\begin{tikzpicture}[remember picture, overlay]%
+\node[rectangle callout, callout absolute pointer={#2}, #1] at #3 {#4};%
 \end{tikzpicture}%
 }
 
@@ -333,7 +369,9 @@ borderline=#1,height={#2},width={#3},
 #4
 }
 
-\newcommand{\proslabel}{{\color{blue}\smiley}}
-\newcommand{\conslabel}{{\color{red}\frownie}}
+% \newcommand{\proslabel}{{\color{blue}\smiley}}
+% \newcommand{\conslabel}{{\color{red}\frownie}}
+\newcommand{\proslabel}{\raise0.2ex\hbox{\textcolor{mgmBlue}{$\boldsymbol{\oplus}$}}}
+\newcommand{\conslabel}{\raise0.2ex\hbox{\textcolor{mgmRed}{$\boldsymbol{\ominus}$}}}
 
 \endinput
