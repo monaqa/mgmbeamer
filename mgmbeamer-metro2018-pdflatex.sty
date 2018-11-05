@@ -1,0 +1,345 @@
+\NeedsTeXFormat{LaTeX2e}
+
+\ProvidesPackage{mgmbeamer-metro2018-pdflatex}
+
+% https://qiita.com/zr_tex8r/items/69e8cc32038ff29f5ac3
+% \RequirePackage{bxdpx-beamer}
+% \RequirePackage{pxjahyper}
+% \RequirePackage{minijs}
+% \renewcommand{\kanjifamilydefault}{\gtdefault}
+\RequirePackage[absolute,overlay]{textpos}
+
+\RequirePackage{booktabs}
+\RequirePackage{colortbl,array,xcolor}
+
+\RequirePackage{pgf,tikz}
+\RequirePackage{pxpgfmark}
+\RequirePackage{tcolorbox}
+\usetikzlibrary{shapes.callouts}
+\usetikzlibrary{arrows}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{calc}
+\tcbuselibrary{xparse,skins,theorems}
+\RequirePackage{environ}
+\RequirePackage{wasysym}
+\RequirePackage{marvosym}
+
+\RequirePackage{etoolbox}
+
+% Theme based on `metropolis`
+\usetheme[progressbar=head]{metropolis}
+
+%%%%%%%%%%%%%%%%%%%%%%%
+%%% package options %%%
+%%%%%%%%%%%%%%%%%%%%%%%
+
+\newif\ifmgmb@useesopic@
+\DeclareOption{draft}{\mgmb@useesopic@true}
+\DeclareOption{final}{\mgmb@useesopic@false}
+\ProcessOptions\relax
+\ifmgmb@useesopic@
+\RequirePackage[colorgrid,gridunit=pt,texcoord]{eso-pic}
+\fi
+
+%%%%%%%%%%%%%%%%%%%
+%%% color theme %%%
+%%%%%%%%%%%%%%%%%%%
+% #604c38
+% #113b44
+% #EB811B
+% #14B03D
+% #e01e1a
+% #1d4a55
+% #e01e1a
+% #11449a
+% #95ecd6
+
+\definecolor{mDarkBrown}{HTML}{604c38}
+\definecolor{mDarkTeal}{HTML}{113b44}
+\definecolor{mLightBrown}{HTML}{EB811B}
+\definecolor{mLightGreen}{HTML}{14B03D}
+\definecolor{mgmAlert1}{HTML}{e01e1a}
+\definecolor{mgmAlert2}{HTML}{1d4a55}
+\definecolor{mgmRed}{HTML}{e01e1a}
+\definecolor{mgmBlue}{HTML}{11449a}
+\definecolor{mgmSky}{HTML}{95ecd6}
+
+\setbeamercolor{normal text}{fg=black, bg=white}
+\setbeamercolor{structure}{fg=mgmAlert2}
+\setbeamercolor{alerted text}{%
+  fg=mgmAlert1
+}
+\setbeamercolor{progress bar}{%
+  use=mDarkTeal,
+  fg=mDarkTeal!80,
+  bg=mDarkTeal!50!black!30
+}
+\setbeamercolor{title separator}{fg=mDarkTeal}
+\setbeamercolor{palette primary}{%
+  use=normal text,
+  fg=normal text.bg,
+  bg=mDarkBrown!70!black
+}
+\setbeamercolor{frametitle}{%
+  use=palette primary,
+  parent=palette primary
+}
+
+%%%%%%%%%%%%%%%
+%%% margins %%%
+%%%%%%%%%%%%%%%
+
+\setbeamersize{text margin left=1em,text margin right=1em}
+
+
+%%%%%%%%%%%%%%%%%%
+%%% title page %%%
+%%%%%%%%%%%%%%%%%%
+
+\setbeamerfont{author}{size=\normalsize}
+\setbeamerfont{institute}{size=\footnotesize}
+
+\setbeamertemplate{title page}{
+  \noindent\hspace{.04\textwidth}
+  \begin{minipage}[b][\paperheight]{.9\textwidth}
+    \ifx\inserttitlegraphic\@empty\else\usebeamertemplate*{title graphic}\fi
+    \vfill%
+    \ifx\inserttitle\@empty\else\usebeamertemplate*{title}\fi
+    \ifx\insertsubtitle\@empty\else\usebeamertemplate*{subtitle}\fi
+    \vspace{-2ex}
+    \usebeamertemplate*{title separator}
+    \ifx\beamer@shortauthor\@empty\else\usebeamertemplate*{author}\fi
+    \ifx\insertinstitute\@empty\else\usebeamertemplate*{institute}\fi
+    \vspace*{2ex}
+    \ifx\insertdate\@empty\else\usebeamertemplate*{date}\fi
+    \vfill
+    \vspace*{1mm}
+  \end{minipage}
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% lines, separators, progress bars %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\setlength{\metropolis@titleseparator@linewidth}{1pt}
+\setlength{\metropolis@progressonsectionpage@linewidth}{1pt}
+\setlength{\metropolis@progressinheadfoot@linewidth}{1pt}
+
+
+%%%%%%%%%%%%%%%%%%%
+%%% frame title %%%
+%%%%%%%%%%%%%%%%%%%
+
+\setlength{\metropolis@frametitle@padding}{1.7ex}
+\defbeamertemplate{frametitle}{mgmframetitle}{%
+  \nointerlineskip%
+  % \vspace{.5ex}
+  \begin{beamercolorbox}[%
+      wd=\paperwidth,%
+      sep=0pt,%
+      leftskip=\metropolis@frametitle@padding,%
+      rightskip=\metropolis@frametitle@padding,%
+    ]{frametitle}%
+  \metropolis@frametitlestrut@start%
+  \insertframetitle%
+  \nolinebreak%
+  \metropolis@frametitlestrut@end%
+  \end{beamercolorbox}%
+  \vspace{-1.0ex}
+}
+\setbeamertemplate{frametitle}[mgmframetitle]
+
+
+%%%%%%%%%%%%%%%
+%%% itemize %%%
+%%%%%%%%%%%%%%%
+
+\setbeamercolor{itemize item}{
+  fg=mDarkTeal!80!black
+}
+
+\setbeamertemplate{itemize item}{%
+\raise0.15ex\hbox{%
+\textcolor{mDarkTeal}{$\diamond$}%
+}}
+\setbeamertemplate{itemize subitem}{%
+\raise0.25ex\hbox{%
+\textcolor{mDarkTeal}{\scriptsize$\blacktriangleright$}%
+}}
+\setbeamertemplate{itemize subsubitem}{%
+\raise0.15ex\hbox{%
+\textcolor{mDarkTeal}{\scriptsize$\bullet$}%
+}}
+\setbeamertemplate{itemize/enumerate body begin}{\sffamily}
+\setbeamertemplate{itemize/enumerate subbody begin}{\sffamily\small}
+
+\setlength\leftmargini{1em}
+\setlength\leftmarginii{1em}
+\setlength\leftmarginiii{1em}
+\setlength  \labelsep  {.5em}
+\setlength  \labelwidth{\leftmargini}
+\addtolength\labelwidth{-\labelsep}
+\setlength\topsep{0pt}
+
+
+%%%%%%%%%%%%%%
+%%% footer %%%
+%%%%%%%%%%%%%%
+
+\setbeamertemplate{footline}[frame number]
+
+
+%%%%%%%%%%%%%
+%%% boxes %%%
+%%%%%%%%%%%%%
+
+\setlength{\fboxsep}{2pt}
+\setlength{\fboxrule}{0.8pt}
+
+\defbeamertemplateparent{blocks}[myframed]{block begin,block end}[1][]
+{[#1]}
+\defbeamertemplate{block begin}{myframed}[1][]{
+  \begin{tcolorbox}[%
+    colback=white,%
+    colframe=mDarkTeal,%
+    colbacktitle=white,%
+    coltitle=mDarkTeal,%
+    coltext=black,%
+    rounded corners,%
+    boxrule=0.8pt,%
+    title=\insertblocktitle,
+    fonttitle=\sffamily
+    ]%
+    \vskip\smallskipamount%
+    \raggedright%
+    \usebeamerfont{block body}%
+    \small
+}
+\defbeamertemplate{block end}{myframed}[1][]{\end{tcolorbox}}
+\setbeamertemplate{blocks}[myframed]
+
+\newtcolorbox{notitleblock}{%
+colback=white,%
+colframe=mDarkTeal,%
+colbacktitle=white,%
+coltitle=mDarkTeal,%
+coltext=black,%
+rounded corners,%
+boxrule=0.8pt,
+fontupper=\small,
+fontlower=\small
+}
+
+
+%%%%%%%%%%%%%%
+%%% alerts %%%
+%%%%%%%%%%%%%%
+
+\setbeamerfont{alerted text}{series=\bfseries, family=\sffamily}
+\setbeamerfont{structure}{family=\sffamily}
+\newcommand{\memph}[1]{{\sffamily\bfseries #1}}
+
+
+%%%%%%%%%%%%%%%
+%%% bubbles %%%
+%%%%%%%%%%%%%%%
+
+\newcommand{\bubblegum}[2]{%
+\tikz[remember picture,baseline=(#1.base)]{\node[inner sep=0pt, outer sep=0pt] (#1){#2};}%
+}
+\newcommand{\bubble}[3][fill=mDarkTeal!5,line width=0.8pt,draw=mDarkTeal]{%
+\begin{tikzpicture}[remember picture, overlay]%
+\node[rectangle callout, callout absolute pointer={#2}, #1]{#3};%
+\end{tikzpicture}%
+}
+
+\newcommand{\bubbleat}[4][fill=mDarkTeal!5,line width=0.8pt,draw=mDarkTeal]{%
+\begin{tikzpicture}[remember picture, overlay]%
+\node[rectangle callout, callout absolute pointer={#2}, #1] at #3 {#4};%
+\end{tikzpicture}%
+}
+
+
+%%%%%%%%%%%%%%%%%
+%%% equations %%%
+%%%%%%%%%%%%%%%%%
+
+\apptocmd\normalsize{%
+ \abovedisplayskip=4pt plus 2pt minus 3pt
+ \abovedisplayshortskip=0pt plus 2pt
+ \belowdisplayskip=4pt plus 2pt minus 3pt
+ \belowdisplayshortskip=2pt plus 2pt minus 4pt
+}{}{}
+
+\apptocmd\small{%
+ \abovedisplayskip=4pt plus 2pt minus 3pt
+ \abovedisplayshortskip=0pt plus 2pt
+ \belowdisplayskip=4pt plus 2pt minus 3pt
+ \belowdisplayshortskip=2pt plus 2pt minus 4pt
+}{}{}
+
+\apptocmd\footnotesize{%
+ \abovedisplayskip=4pt plus 2pt minus 3pt
+ \abovedisplayshortskip=0pt plus 2pt
+ \belowdisplayskip=4pt plus 2pt minus 3pt
+ \belowdisplayshortskip=2pt plus 2pt minus 4pt
+}{}{}
+
+\NewEnviron{alignc}[1][1]{
+{\footnotesize
+\begin{align}
+  \scalebox{#1}{$
+  \begin{aligned}
+    \BODY
+  \end{aligned}
+  $}
+\end{align}
+}
+}
+\NewEnviron{alignl}[1][1]{
+\par
+\smallskip
+\footnotesize
+\scalebox{#1}{$
+\begin{aligned}
+  \BODY
+\end{aligned}
+$}
+\smallskip
+\par
+}
+
+\newcommand{\eqcbox}[3][]{\tcboxmath[
+enhanced,
+colframe=white,colback=white,
+boxsep=3pt,left=0pt,right=0pt,top=0pt,bottom=0pt,
+borderline={1pt}{1pt}{#2,dashed},
+arc=2pt,
+#1]{#3}}
+
+
+%%%%%%%%%%%%%%
+%%% others %%%
+%%%%%%%%%%%%%%
+
+\newcommand{\Arw}{\MVRightarrow}
+\def\bHline{\noalign{\color{mgmBlue}\hrule height 1pt}}
+\def\bhline{\noalign{\color{mgmBlue}\hrule height 0.5pt}}
+\let\narrowbaselines\relax
+
+\newcommand{\mcite}[1]{{\footnotesize [#1]}}
+
+\DeclareTColorBox{mDbox}{O{{1pt}{0pt}{mgmRed,dashed}} m m o}{
+enhanced jigsaw,
+colback=white, colframe=white, opacityback=0,
+borderline=#1,height={#2},width={#3},
+#4
+}
+
+% \newcommand{\proslabel}{{\color{blue}\smiley}}
+% \newcommand{\conslabel}{{\color{red}\frownie}}
+\newcommand{\proslabel}{\raise0.2ex\hbox{\textcolor{mgmBlue}{$\boldsymbol{\oplus}$}}}
+\newcommand{\conslabel}{\raise0.2ex\hbox{\textcolor{mgmRed}{$\boldsymbol{\ominus}$}}}
+
+\endinput
