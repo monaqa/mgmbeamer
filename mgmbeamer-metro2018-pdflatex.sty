@@ -171,8 +171,7 @@
 \raise0.15ex\hbox{%
 \textcolor{mDarkTeal}{\scriptsize$\bullet$}%
 }}
-\setbeamertemplate{itemize/enumerate body begin}{\sffamily}
-\setbeamertemplate{itemize/enumerate subbody begin}{\sffamily\small}
+\setbeamerfont{itemize/enumerate subbody}{size=\small}
 
 \setlength\leftmargini{1em}
 \setlength\leftmarginii{1em}
@@ -208,8 +207,7 @@
     coltext=black,%
     rounded corners,%
     boxrule=0.8pt,%
-    title=\insertblocktitle,
-    fonttitle=\sffamily
+    title=\insertblocktitle
     ]%
     \vskip\smallskipamount%
     \raggedright%
@@ -236,9 +234,9 @@ fontlower=\small
 %%% alerts %%%
 %%%%%%%%%%%%%%
 
-\setbeamerfont{alerted text}{series=\bfseries, family=\sffamily}
-\setbeamerfont{structure}{family=\sffamily}
-\newcommand{\memph}[1]{{\sffamily\bfseries #1}}
+\setbeamerfont{alerted text}{series=\bfseries}
+\setbeamerfont{structure}{}
+\newcommand{\memph}[1]{{\bfseries #1}}
 
 
 %%%%%%%%%%%%%%%
@@ -323,7 +321,7 @@ arc=2pt,
 %%% others %%%
 %%%%%%%%%%%%%%
 
-\newcommand{\Arw}{\MVRightarrow}
+\newcommand{\Arw}{\scalebox{1.5}{\MVRightarrow}}
 \def\bHline{\noalign{\color{mgmBlue}\hrule height 1pt}}
 \def\bhline{\noalign{\color{mgmBlue}\hrule height 0.5pt}}
 \let\narrowbaselines\relax
